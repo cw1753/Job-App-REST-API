@@ -3,18 +3,27 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passportSetup = require('./config/passport-setup');
 const dotenv = require('dotenv').config();
+const passport = require('passport');
+const cookieSession = require('cookie-session');
 
 
-console.log(process.env.NODE_ENV);
 //Set up our express app
 const app = express();
 
+//Set up cookie session
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, //This is in milliseconds 
+    keys:[process.env.SEESION_COOKIE_KEY]
+}))
+app.use(passport.initialize());
+app.use(passport.session());
+
 //Connect to mongodb;
 mongoose.set('useCreateIndex', true);
-// mongoose.connect(process.env.MONGODB_LOCAL_DB, {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_LOCAL_DB, {useNewUrlParser: true});
 
 //Connect to MongoDB on mLab
-mongoose.connect(process.env.MONGODB_MLAB_DB, {useNewUrlParser: true});
+// mongoose.connect(process.env.MONGODB_MLAB_DB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 
 //Set up body parser
@@ -33,8 +42,8 @@ app.use( (err, req, res, next) => {
     res.send({error: err.message});
 })
 
-const port = process.env.PORT || 4000
 //Listen to port
+const port = process.env.PORT || 4000
 app.listen(port, function(){
     console.log('Listening on port ' + port);
 });
