@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const passportSetup = require('./config/passport-setup');
 const dotenv = require('dotenv').config();
 const passport = require('passport');
-const cookieSession = require('cookie-session');
 
 
 //Set up our express app
