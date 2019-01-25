@@ -10,14 +10,6 @@ const cookieSession = require('cookie-session');
 //Set up our express app
 const app = express();
 
-//Set up cookie session
-app.use(cookieSession({
-    maxAge: 24 * 60 * 60 * 1000, //This is in milliseconds 
-    keys:[process.env.SEESION_COOKIE_KEY]
-}))
-app.use(passport.initialize());
-app.use(passport.session());
-
 //Connect to mongodb;
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGODB_LOCAL_DB, {useNewUrlParser: true});

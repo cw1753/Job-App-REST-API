@@ -22,6 +22,10 @@ const jobSchema = new Schema({
     applyDate:{
         type: Date,
         default: new Date()
+    },
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }                                                                                                                                          
 });
 

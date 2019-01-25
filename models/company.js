@@ -10,7 +10,7 @@ const companySchema = new Schema({
     },
     link:{
         type:String
-    }                                                                                                                                                    
+    }
 });
 
 const Company = mongoose.model('company', companySchema);

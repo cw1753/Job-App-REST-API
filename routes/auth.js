@@ -1,23 +1,18 @@
 const router = require('express').Router();
 const passport = require('passport');
+const UserController = require('../controllers/user-controller');
 
-router.get('/login', (req, res) => {
+const jwtAuthenticate = passport.authenticate('jwt', {session: false});
+const googleAuthenticate = passport.authenticate('googleToken', {session: false});
 
-});
-
-router.get('/logout', (req, res) => {
-    req.logout();
-});
 
 //Auth with google
-router.get('/google', passport.authenticate('google', {
-    scope:['profile']
-}))
+router.post('/google', googleAuthenticate, UserController.googleOAuth);
 
-//Callback route for google to redirect to
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.send("Reached the callback URI")
-})
+router.get('/test-auth', jwtAuthenticate, (req, res, next) => {
+    console.log('Passed Auth');
+    res.json({secret: "private resource"});
+});
 
 
 module.exports = router;
