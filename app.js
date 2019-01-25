@@ -12,10 +12,10 @@ const app = express();
 
 //Connect to mongodb;
 mongoose.set('useCreateIndex', true);
-mongoose.connect(process.env.MONGODB_LOCAL_DB, {useNewUrlParser: true});
+// mongoose.connect(process.env.MONGODB_LOCAL_DB, {useNewUrlParser: true});
 
 //Connect to MongoDB on mLab
-// mongoose.connect(process.env.MONGODB_MLAB_DB, {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_MLAB_DB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 
 //Set up body parser
