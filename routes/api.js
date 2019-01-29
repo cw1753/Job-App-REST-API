@@ -26,7 +26,7 @@ router.get('/job', jwtAuthenticate, (req, res, next) => {
 //Get jobs from a specific company
 router.get('/job/:company', jwtAuthenticate, (req, res, next) => {
     Job.find({user: req.user.id, company: req.params.company}).then( (result) => {
-        console.log("GET: /job/", req.params.company , " for ", req.user.id);
+        console.log("GET: /job/", req.params.company);
         res.send(result);
     }).catch(next);
 })
