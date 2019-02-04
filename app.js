@@ -1,9 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const passportSetup = require('./config/passport-setup');
 const dotenv = require('dotenv').config();
-const passport = require('passport');
 
 
 //Set up our express app
@@ -20,6 +18,16 @@ mongoose.Promise = global.Promise;
 //Set up body parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+//Adjust CORS
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authoriuzation');
+    if(req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+        return res.status(200).json({});
+    }
+})
 
 //Initialize routes
 app.use('/api', require('./routes/api'));
